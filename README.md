@@ -1,23 +1,13 @@
 # Twitch Chat Viewer
 
-A modern web application that displays your Twitch chat data in a beautiful, Twitch-like interface. Import your CSV or XLSX files and browse your chat history with powerful filtering and search capabilities.
+A modern web application that displays your Twitch chat data in a beautiful, Twitch-like interface. Import your CSV file and browse your chat history with powerful filtering and search capabilities.
 
-## Features
-
-🎯 **Twitch-like UI**: Authentic chat interface that mimics the real Twitch experience
-📊 **File Import**: Support for both CSV and XLSX file formats
-🔍 **Advanced Search**: Search messages across all channels or within specific channels
-📅 **Date Filtering**: Filter messages by date range
-🏷️ **Channel Organization**: View all channels you've participated in with message counts
-🎨 **Color-coded Usernames**: Each username gets a unique color for easy identification
-⚡ **Real-time Filtering**: Instant search and filter results
-📱 **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 
 ## Getting Started
 
 1. **Open the Application**: Open `index.html` in your web browser
 2. **Import Your Data**: 
-   - Drag and drop your CSV/XLSX file onto the upload area, or
+   - Drag and drop your CSV file onto the upload area, or
    - Click "Choose File" to browse and select your file
 3. **Browse Your Chats**: 
    - Select channels from the sidebar to view their messages
@@ -103,7 +93,7 @@ This application works in all modern browsers:
 ## Troubleshooting
 
 ### File Won't Load
-- Ensure your file is in CSV or XLSX format
+- Ensure your file is in CSV format
 - Check that required columns (time, message, channel, username) are present
 - Verify the file isn't corrupted
 
@@ -128,7 +118,3 @@ This is an open-source project. Feel free to:
 ## License
 
 MIT License - Feel free to use this code for your own projects!
-
----
-
-**Enjoy browsing your Twitch chat history!** 🎮💬
