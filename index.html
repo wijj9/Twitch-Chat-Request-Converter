@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Chat Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fab fa-twitch"></i>
+                    <h1>Chat History Viewer</h1>
+                </div>
+                <div class="header-stats" id="headerStats">
+                    <span class="stat">
+                        <i class="fas fa-comments"></i>
+                        <span id="totalMessages">0</span> messages
+                    </span>
+                    <span class="stat">
+                        <i class="fas fa-hashtag"></i>
+                        <span id="totalChannels">0</span> channels
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="file-upload-section">
+                    <h3><i class="fas fa-upload"></i> Import Data</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop your CSV file here</p>
+                            <p class="conversion-note">(CSV files will be automatically converted to TXT)</p>
+                            <p>or</p>
+                            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                                Choose File
+                            </button>
+                        </div>
+                        <input type="file" id="fileInput" accept=".csv,.txt,.xlsx,.xls" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="channels-section">
+                    <h3><i class="fas fa-hashtag"></i> Channels</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="channelSearch" placeholder="Search channels...">
+                    </div>
+                    <div class="channels-list" id="channelsList">
+                        <div class="no-data">No channels loaded</div>
+                    </div>
+                </div>
+
+                <div class="filters-section">
+                    <h3><i class="fas fa-filter"></i> Filters</h3>
+                    <div class="filter-group">
+                        <label for="dateFrom">From Date:</label>
+                        <input type="date" id="dateFrom" placeholder="YYYY-MM-DD">
+                        <small class="input-help">Click calendar or type date (YYYY-MM-DD)</small>
+                    </div>
+                    <div class="filter-group">
+                        <label for="dateTo">To Date:</label>
+                        <input type="date" id="dateTo" placeholder="YYYY-MM-DD">
+                        <small class="input-help">Click calendar or type date (YYYY-MM-DD)</small>
+                    </div>
+                    <button class="apply-filters-btn" id="applyFilters">
+                        <i class="fas fa-check"></i> Apply Filters
+                    </button>
+                    <button class="clear-filters-btn" id="clearFilters">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Chat Area -->
+            <main class="chat-area">
+                <div class="chat-header">
+                    <div class="active-channel" id="activeChannel">
+                        <i class="fas fa-hashtag"></i>
+                        <span id="channelName">Select a channel</span>
+                    </div>
+                    <div class="chat-controls">
+                        <div class="search-messages">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="messageSearch" placeholder="Search messages...">
+                        </div>
+                        <button class="scroll-to-bottom" id="scrollToBottom">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="welcome-message">
+                        <div class="welcome-content">
+                            <i class="fab fa-twitch"></i>
+                            <h2>Welcome to Twitch Chat Viewer</h2>
+                            <p>Upload your CSV file to start viewing your chat history</p>
+                            <div class="feature-list">
+                                <div class="feature">
+                                    <i class="fas fa-file-import"></i>
+                                    <span>Import CSV files</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-comments"></i>
+                                    <span>View chat messages by channel</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-search"></i>
+                                    <span>Search and filter messages</span>
+                                </div>
+                                <div class="feature">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Timestamp-based filtering</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing your file...</p>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div class="modal-overlay" id="errorModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+                    <button class="close-modal" onclick="closeErrorModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" onclick="closeErrorModal()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
