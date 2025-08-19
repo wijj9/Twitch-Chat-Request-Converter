@@ -2,6 +2,57 @@
 
 A modern web application that displays your Twitch chat data in a beautiful, Twitch-like interface. Import your CSV file and browse your chat history with powerful filtering and search capabilities.
 
+## How to Get Your Twitch Chat Data
+
+Before using this viewer, you'll need to request your data from Twitch. Here's how:
+
+### Step 1: Navigate to Twitch Settings
+![Step 1](images/step1.png)
+- Go to your Twitch profile and click on your avatar in the top-right corner
+- Select "Settings" from the dropdown menu
+- This will take you to your account settings page
+
+### Step 2: Access Privacy Settings
+![Step 2](images/step2.png)
+- In the settings sidebar, look for the "Security and Privacy" section
+- Click on the privacy-related options to access data management features
+- Navigate to the data download section
+
+### Step 3: Request Your Data
+![Step 3](images/step3.png)
+- Find the "Download Your Data" section at the bottom of the privacy settings
+- Click on "Download a Copy of Your Data" button
+- Twitch will process your request and email you a download link when ready
+- This process can a couple of days to complete
+
+**Note**: Your data package will include various files, but you'll specifically need the chat message data (usually in CSV format) for this viewer.
+
+### What to Expect in Your Data Download
+
+When Twitch processes your data request, you'll receive a ZIP file containing multiple folders:
+
+- **Account Information**: Basic profile data
+- **Chat Messages**: Your chat history across all channels (this is what you need!)
+- **Follows**: Channels you follow
+- **Prime/Turbo**: Subscription history
+- **Video History**: VODs you've watched
+- **And more**: Various other account activities
+
+The chat messages file will typically be named something like `chat_messages.csv` and contains columns for:
+- Timestamp
+- Channel name
+- Your username
+- Message content
+- User ID and other metadata
+
+### Converting Your Data
+
+Once you have your chat data CSV file, you can optionally use the included PowerShell scripts to clean and convert the data:
+
+- **`convert-csv-to-txt.ps1`**: Simple conversion script
+- **`convert-csv-to-txt-enhanced.ps1`**: Enhanced version with data cleaning options
+
+Or simply upload your CSV file directly - the web application will automatically convert and clean it!
 
 ## Getting Started
 
